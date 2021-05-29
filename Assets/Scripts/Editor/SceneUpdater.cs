@@ -46,7 +46,7 @@ public class SceneUpdater : EditorWindow
                 var canvas = GameObject.Find("Canvas");
                 ChangeCanvasSettings(canvas, RenderMode.ScreenSpaceOverlay, CanvasScaler.ScaleMode.ScaleWithScreenSize);
 
-                // изменение настроект шрифта
+                // изменение настроек шрифта
                 var tmp = canvas.GetComponentInChildren<TextMeshProUGUI>();
                 ChangeTMPSettings(tmp, 36, 72, TextAlignmentOptions.BottomRight);
 
@@ -57,7 +57,7 @@ public class SceneUpdater : EditorWindow
                 AddPersistentListenerToButton(canvas.GetComponentInChildren<Button>(), FindObjectOfType<SampleClass>().QuitApp);
 
                 // копирование настроек компонента
-                CopyTransformPositionRotationScale(GameObject.Find("Plane"), cube);
+                CopyTransformPositionRotationScale(GameObject.Find("Plane"), cube, copyScale:false);
             }));
     }
 
@@ -88,7 +88,7 @@ public class SceneUpdater : EditorWindow
     }
 
     /// <summary>
-    /// Добавление обработчика события на кнопку (чтобы было видно в инстпекторе)
+    /// Добавление обработчика события на кнопку (чтобы было видно в инспекторе)
     /// </summary>
     /// <param name="uiButton"> кнопка </param>
     /// <param name="action"> требуемое действие </param>
@@ -181,16 +181,16 @@ public class SceneUpdater : EditorWindow
     /// <param name="objectToCopyFrom"> объект, с которого копируются части компонента </param>
     /// <param name="objectToPasteTo"> объект, на который вставляются части компонента </param>
     /// <param name="copyPosition"> по умолчанию позиция копируется, с помощью данного параметра это можно отключить </param>
-    /// <param name="copeRotation"> по умолчанию поворот копируется, с помощью данного параметра это можно отключить </param>
+    /// <param name="copyRotation"> по умолчанию поворот копируется, с помощью данного параметра это можно отключить </param>
     /// <param name="copyScale"> по умолчанию размер копируется, с помощью данного параметра это можно отключить </param>
     private static void CopyTransformPositionRotationScale(GameObject objectToCopyFrom, GameObject objectToPasteTo, 
-        bool copyPosition = true, bool copeRotation = true, bool copyScale = true)
+        bool copyPosition = true, bool copyRotation = true, bool copyScale = true)
     {
         var newTransform = objectToCopyFrom.GetComponent<Transform>();
         var currentTransform = objectToPasteTo.GetComponent<Transform>();
         
         if (copyPosition) currentTransform.localPosition = newTransform.localPosition;
-        if (copeRotation) currentTransform.localRotation = newTransform.localRotation;
+        if (copyRotation) currentTransform.localRotation = newTransform.localRotation;
         if (copyScale) currentTransform.localScale = newTransform.localScale;
     }
     
@@ -202,21 +202,21 @@ public class SceneUpdater : EditorWindow
     /// <param name="objectToCopyFrom"> объект, с которого копируются части компонента </param>
     /// <param name="objectToPasteTo"> объект, на который вставляются части компонента </param>
     /// <param name="copyPosition"> по умолчанию позиция копируется, с помощью данного параметра это можно отключить </param>
-    /// <param name="copeRotation"> по умолчанию поворот копируется, с помощью данного параметра это можно отключить </param>
+    /// <param name="copyRotation"> по умолчанию поворот копируется, с помощью данного параметра это можно отключить </param>
     /// <param name="copyScale"> по умолчанию размер копируется, с помощью данного параметра это можно отключить </param>
     private static void CopyRectTransformPositionRotationScale(GameObject objectToCopyFrom, GameObject objectToPasteTo,
-        bool copyPosition = true, bool copeRotation = true, bool copyScale = true)
+        bool copyPosition = true, bool copyRotation = true, bool copyScale = true)
     {
         var newTransform = objectToCopyFrom.GetComponent<RectTransform>();
         var currentTransform = objectToPasteTo.GetComponent<RectTransform>();
         
         if (copyPosition) currentTransform.localPosition = newTransform.localPosition;
-        if (copeRotation) currentTransform.localRotation = newTransform.localRotation;
+        if (copyRotation) currentTransform.localRotation = newTransform.localRotation;
         if (copyScale) currentTransform.localScale = newTransform.localScale;
     }
 
     /// <summary>
-    /// Уничтожение объекта с конктретным названием
+    /// Уничтожение объекта с уникальным названием
     /// </summary>
     /// <param name="objectName"> название объекта </param>
     private void DestroyObjectWithName(string objectName)
@@ -225,7 +225,7 @@ public class SceneUpdater : EditorWindow
     }
 
     /// <summary>
-    /// Добавление компонента к объекту с конктретным названием
+    /// Добавление компонента к объекту с уникальным названием
     /// </summary>
     /// <param name="objectName"> название объекта </param>
     /// <typeparam name="T"> тип компонента </typeparam>

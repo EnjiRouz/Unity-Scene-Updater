@@ -43,7 +43,7 @@ public enum PivotPresets
 /// <summary>
 /// Расширение возможностей работы с RectTransform
 /// </summary>
-public static class RectTransformExtensions
+public static class RectTransformExtension
 {
     /// <summary>
     /// Изменение якоря
